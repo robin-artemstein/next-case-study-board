@@ -1,0 +1,63 @@
+[+] Building 307.0s (13/17)                                                                                                                                        docker:default
+ => [internal] load build definition from Dockerfile                                                                                                                         0.0s
+ => => transferring dockerfile: 1.05kB                                                                                                                                       0.0s
+ => [internal] load metadata for docker.io/library/node:22-alpine                                                                                                            2.6s
+ => [internal] load .dockerignore                                                                                                                                            0.0s
+ => => transferring context: 91B                                                                                                                                             0.0s
+ => [internal] load build context                                                                                                                                            0.0s
+ => => transferring context: 13.48kB                                                                                                                                         0.0s
+ => [builder 1/7] FROM docker.io/library/node:22-alpine@sha256:d2166de198f26e17e5a442f537754dd616ab069c47cc57b889310a717e0abbf9                                              0.0s
+ => CACHED [runner 2/7] RUN apk add --no-cache dumb-init                                                                                                                     0.0s
+ => CACHED [runner 3/7] WORKDIR /app                                                                                                                                         0.0s
+ => CACHED [builder 2/7] RUN apk add --no-cache libc6-compat                                                                                                                 0.0s
+ => CACHED [builder 3/7] WORKDIR /app                                                                                                                                        0.0s
+ => CACHED [builder 4/7] COPY package.json yarn.lock ./                                                                                                                      0.0s
+ => [builder 5/7] RUN yarn install --frozen-lockfile                                                                                                                       288.4s
+ => [builder 6/7] COPY . .                                                                                                                                                   0.1s 
+ => ERROR [builder 7/7] RUN yarn build                                                                                                                                      15.8s 
+------                                                                                                                                                                            
+ > [builder 7/7] RUN yarn build:                                                                                                                                                  
+0.415 yarn run v1.22.22                                                                                                                                                           
+0.457 $ next build --turbopack                                                                                                                                                    
+1.524 Attention: Next.js now collects completely anonymous telemetry regarding usage.                                                                                             
+1.524 This information is used to shape Next.js' roadmap and prioritize features.                                                                                                 
+1.525 You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+1.525 https://nextjs.org/telemetry
+1.525 
+1.606    ▲ Next.js 15.5.3 (Turbopack)
+1.606    - Environments: .env
+1.606 
+1.738    Creating an optimized production build ...
+11.11  ✓ Finished writing to disk in 10ms
+11.14  ✓ Compiled successfully in 8.6s
+11.15    Linting and checking validity of types ...
+13.91    Collecting page data ...
+14.44 Error generating static params: TypeError: fetch failed
+14.44     at async Object.e [as generateStaticParams] (.next/server/chunks/ssr/[root-of-the-server]__e817e153._.js:1:5892) {
+14.44   [cause]: [AggregateError: ] { code: 'ECONNREFUSED' }
+14.44 }
+14.95    Generating static pages (0/5) ...
+15.67    Generating static pages (1/5) 
+15.67    Generating static pages (2/5) 
+15.67    Generating static pages (3/5) 
+15.69 Error occurred prerendering page "/". Read more: https://nextjs.org/docs/messages/prerender-error
+15.69 TypeError: fetch failed
+15.69     at async f (.next/server/chunks/ssr/[root-of-the-server]__d3394ff5._.js:1:13883)
+15.69     at async g (.next/server/chunks/ssr/[root-of-the-server]__d3394ff5._.js:1:14059) {
+15.69   digest: '3623707747',
+15.69   [cause]: [AggregateError: ] { code: 'ECONNREFUSED' }
+15.69 }
+15.69 Export encountered an error on /page: /, exiting the build.
+15.70  ⨯ Next.js build worker exited with code: 1 and signal: null
+15.73 error Command failed with exit code 1.
+15.73 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+------
+Dockerfile:20
+--------------------
+  18 |     
+  19 |     # Build Next.js app (creates .next folder)
+  20 | >>> RUN yarn build
+  21 |     
+  22 |     
+--------------------
+ERROR: failed to build: failed to solve: process "/bin/sh -c yarn build" did not complete successfully: exit code: 1
